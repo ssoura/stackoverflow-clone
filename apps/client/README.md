@@ -6,7 +6,7 @@
 - [Context API w/ hooks](https://reactjs.org/docs/context.html) - For state of user, toast notifs, theme etc.
 - [React Router](https://reactrouter.com/) - For general routing & navigation
 - [React Hook Form](https://react-hook-form.com/) - For flexible forms
-- [Material-UI w/ lots of CSS customisations](https://material-ui.com/) - UI library
+- [MUI](https://mui.com/) - React UI library
 - [Yup](https://github.com/jquense/yup) - For form validation
 - [date-fns](https://date-fns.org/) - For manipulating & formatting of dates
 
@@ -27,7 +27,7 @@ SECRET = "Your JWT secret"
 
 #### Client:
 
-Open client/src/backendUrl.js & change "backend" variable to `"http://localhost:4000"`
+Open client/src/backendUrl.js and set "backend" variable to `"http://localhost:4000"`
 
 #### Run:
 
