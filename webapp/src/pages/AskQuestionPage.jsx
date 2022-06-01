@@ -76,7 +76,7 @@ const AskQuestionPage = () => {
     addQuestion({
       variables: { title, body, tags },
       update: (_, { data }) => {
-        history.push(`/questions/${data.postQuestion.id}`);
+        history(`/questions/${data.postQuestion.id}`);
         reset();
         notify("Question posted!");
       },
@@ -89,7 +89,7 @@ const AskQuestionPage = () => {
     updateQuestion({
       variables: { quesId: editValues.quesId, title, body, tags },
       update: (_, { data }) => {
-        history.push(`/questions/${data.editQuestion.id}`);
+        history(`/questions/${data.editQuestion.id}`);
         clearEdit();
         notify("Question edited!");
       },
@@ -143,7 +143,7 @@ const AskQuestionPage = () => {
       >
         <div className={classes.inputWrapper}>
           <Typography variant="caption" color="secondary">
-            Be specific and imagine you’re asking a question to another person
+            Be specific and imagine you're asking a question to another person
           </Typography>
           <TextField
             required
