@@ -1,34 +1,40 @@
-import { useForm } from 'react-hook-form';
-import { Link as RouterLink } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { POST_ANSWER } from '../graphql/mutations';
-import { VIEW_QUESTION } from '../graphql/queries';
-import { useAuthContext } from '../context/auth';
-import { useStateContext } from '../context/state';
-import AuthFormModal from './AuthFormModal';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { getErrorMsg } from '../utils/helperFuncs';
+import { useForm } from "react-hook-form";
+import { Link as RouterLink } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { POST_ANSWER } from "../graphql/mutations";
+import { VIEW_QUESTION } from "../graphql/queries";
+import { useAuthContext } from "../context/auth";
+import { useStateContext } from "../context/state";
+import AuthFormModal from "./AuthFormModal";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { getErrorMsg } from "../utils/helperFuncs";
 
-import { Typography, Button, TextField, Chip, Link } from '@mui/material';
-import { useQuesPageStyles } from '../styles/muiStyles';
+import { Typography, Button, TextField, Chip, Link } from "@mui/material";
+import { useQuesPageStyles } from "../styles/muiStyles";
 
 const validationSchema = yup.object({
-  answerBody: yup.string().min(30, 'Must be at least 30 characters'),
+  answerBody: yup.string().min(30, "Must be at least 30 characters"),
 });
 
 const AnswerForm = ({ quesId, tags }) => {
   const classes = useQuesPageStyles();
   const { user } = useAuthContext();
   const { clearEdit, notify } = useStateContext();
-  const { register, handleSubmit, reset, errors } = useForm({
-    mode: 'onChange',
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    mode: "onChange",
     resolver: yupResolver(validationSchema),
   });
 
   const [addAnswer, { loading }] = useMutation(POST_ANSWER, {
     onError: (err) => {
-      notify(getErrorMsg(err), 'error');
+      notify(getErrorMsg(err), "error");
     },
   });
 
@@ -54,7 +60,7 @@ const AnswerForm = ({ quesId, tags }) => {
           data: { viewQuestion: updatedData },
         });
 
-        notify('Answer submitted!');
+        notify("Answer submitted!");
       },
     });
   };
@@ -62,14 +68,13 @@ const AnswerForm = ({ quesId, tags }) => {
   return (
     <div className={classes.answerForm}>
       {user && (
-        <Typography variant="h6" color="secondary">
-          Your Answer
-        </Typography>
+        // <Typography variant="h6" color="secondary">
+        <Typography color="secondary">Your Answer</Typography>
       )}
       {user && (
         <form onSubmit={handleSubmit(postAnswer)}>
           <TextField
-            inputRef={register}
+            {...register("answerBody")}
             name="answerBody"
             required
             fullWidth
@@ -77,8 +82,8 @@ const AnswerForm = ({ quesId, tags }) => {
             placeholder="Enter atleast 30 characters"
             variant="outlined"
             size="small"
-            error={'answerBody' in errors}
-            helperText={'answerBody' in errors ? errors.answerBody.message : ''}
+            error={"answerBody" in errors}
+            helperText={"answerBody" in errors ? errors.answerBody.message : ""}
             multiline
             rows={5}
           />
@@ -86,7 +91,7 @@ const AnswerForm = ({ quesId, tags }) => {
             <Button
               color="primary"
               variant="contained"
-              style={{ marginTop: '0.8em' }}
+              style={{ marginTop: "0.8em" }}
               type="submit"
               disabled={loading}
             >
@@ -97,7 +102,7 @@ const AnswerForm = ({ quesId, tags }) => {
       )}
       <div className={classes.footerText}>
         <span>
-          Browse other questions tagged{' '}
+          Browse other questions tagged{" "}
           {tags.map((t) => (
             <Chip
               key={t}
@@ -111,13 +116,14 @@ const AnswerForm = ({ quesId, tags }) => {
               clickable
             />
           ))}
-          or{' '}
+          or{" "}
           {user ? (
             <Link
               component={RouterLink}
               to="/ask"
               onClick={() => clearEdit()}
-              underline="hover">
+              underline="hover"
+            >
               ask your own question.
             </Link>
           ) : (

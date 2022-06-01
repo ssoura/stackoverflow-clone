@@ -71,7 +71,7 @@ const LoginForm = ({ setAuthType, closeModal }) => {
         <div className={classes.inputField}>
           <TextField
             fullWidth
-            inputRef={register}
+            {...register("username")}
             name="username"
             type="text"
             label="Username"
@@ -92,7 +92,7 @@ const LoginForm = ({ setAuthType, closeModal }) => {
           <TextField
             required
             fullWidth
-            inputRef={register}
+            {...register("password")}
             name="password"
             type={showPass ? "text" : "password"}
             label="Password"

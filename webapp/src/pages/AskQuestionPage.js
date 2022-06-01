@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { useMutation } from '@apollo/client';
-import { POST_QUESTION, EDIT_QUESTION } from '../graphql/mutations';
-import { useStateContext } from '../context/state';
-import ErrorMessage from '../components/ErrorMessage';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { getErrorMsg } from '../utils/helperFuncs';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useMutation } from "@apollo/client";
+import { POST_QUESTION, EDIT_QUESTION } from "../graphql/mutations";
+import { useStateContext } from "../context/state";
+import ErrorMessage from "../components/ErrorMessage";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { getErrorMsg } from "../utils/helperFuncs";
 
 import {
   Typography,
@@ -15,34 +15,40 @@ import {
   Button,
   InputAdornment,
   Chip,
-} from '@mui/material';
-import Autocomplete from '@mui/material/Autocomplete';
-import { useAskQuesPageStyles } from '../styles/muiStyles';
+} from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
+import { useAskQuesPageStyles } from "../styles/muiStyles";
 
 const validationSchema = yup.object({
   title: yup
     .string()
-    .required('Required')
-    .min(15, 'Must be at least 15 characters'),
+    .required("Required")
+    .min(15, "Must be at least 15 characters"),
   body: yup
     .string()
-    .required('Required')
-    .min(30, 'Must be at least 30 characters'),
+    .required("Required")
+    .min(30, "Must be at least 30 characters"),
 });
 
 const AskQuestionPage = () => {
   const classes = useAskQuesPageStyles();
   const history = useNavigate();
   const { editValues, clearEdit, notify } = useStateContext();
-  const [tagInput, setTagInput] = useState('');
+  const [tagInput, setTagInput] = useState("");
   const [tags, setTags] = useState(editValues ? editValues.tags : []);
   const [errorMsg, setErrorMsg] = useState(null);
-  const { register, handleSubmit, reset, errors } = useForm({
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
-      title: editValues ? editValues.title : '',
-      body: editValues ? editValues.body : '',
+      title: editValues ? editValues.title : "",
+      body: editValues ? editValues.body : "",
     },
-    mode: 'onChange',
+    mode: "onChange",
     resolver: yupResolver(validationSchema),
   });
 
@@ -65,33 +71,33 @@ const AskQuestionPage = () => {
   );
 
   const postQuestion = ({ title, body }) => {
-    if (tags.length === 0) return setErrorMsg('Atleast one tag must be added.');
+    if (tags.length === 0) return setErrorMsg("Atleast one tag must be added.");
 
     addQuestion({
       variables: { title, body, tags },
       update: (_, { data }) => {
         history.push(`/questions/${data.postQuestion.id}`);
         reset();
-        notify('Question posted!');
+        notify("Question posted!");
       },
     });
   };
 
   const editQuestion = ({ title, body }) => {
-    if (tags.length === 0) return setErrorMsg('Atleast one tag must be added.');
+    if (tags.length === 0) return setErrorMsg("Atleast one tag must be added.");
 
     updateQuestion({
       variables: { quesId: editValues.quesId, title, body, tags },
       update: (_, { data }) => {
         history.push(`/questions/${data.editQuestion.id}`);
         clearEdit();
-        notify('Question edited!');
+        notify("Question edited!");
       },
     });
   };
 
   const handleTags = (e) => {
-    if (!e || (!e.target.value && e.target.value !== '')) return;
+    if (!e || (!e.target.value && e.target.value !== "")) return;
     const value = e.target.value.toLowerCase().trim();
     setTagInput(value);
 
@@ -99,19 +105,19 @@ const AskQuestionPage = () => {
       .charAt(e.target.selectionStart - 1)
       .charCodeAt();
 
-    if (keyCode === 32 && value.trim() !== '') {
+    if (keyCode === 32 && value.trim() !== "") {
       if (tags.includes(value))
         return setErrorMsg(
           "Duplicate tag found! You can't add the same tag twice."
         );
 
       if (!/^[a-zA-Z0-9-]*$/.test(value)) {
-        return setErrorMsg('Only alphanumeric characters & dash are allowed.');
+        return setErrorMsg("Only alphanumeric characters & dash are allowed.");
       }
 
       if (tags.length >= 5) {
-        setTagInput('');
-        return setErrorMsg('Max 5 tags can be added! Not more than that.');
+        setTagInput("");
+        return setErrorMsg("Max 5 tags can be added! Not more than that.");
       }
 
       if (value.length > 15) {
@@ -119,14 +125,15 @@ const AskQuestionPage = () => {
       }
 
       setTags((prevTags) => [...prevTags, value]);
-      setTagInput('');
+      setTagInput("");
     }
   };
 
   return (
     <div className={classes.root}>
-      <Typography variant="h5" color="secondary">
-        {editValues ? 'Edit Your Question' : 'Ask A Question'}
+      {/* <Typography variant="h5" color="secondary"> */}
+      <Typography color="secondary">
+        {editValues ? "Edit Your Question" : "Ask A Question"}
       </Typography>
       <form
         className={classes.quesForm}
@@ -141,15 +148,15 @@ const AskQuestionPage = () => {
           <TextField
             required
             fullWidth
-            inputRef={register}
+            {...register("title")}
             name="title"
             placeholder="Enter atleast 15 characters"
             type="text"
             label="Title"
             variant="outlined"
             size="small"
-            error={'title' in errors}
-            helperText={'title' in errors ? errors.title.message : ''}
+            error={"title" in errors}
+            helperText={"title" in errors ? errors.title.message : ""}
             className={classes.inputField}
             InputProps={{
               startAdornment: (
@@ -170,15 +177,15 @@ const AskQuestionPage = () => {
             multiline
             rows={5}
             fullWidth
-            inputRef={register}
+            {...register("body")}
             name="body"
             placeholder="Enter atleast 30 characters"
             type="text"
             label="Body"
             variant="outlined"
             size="small"
-            error={'body' in errors}
-            helperText={'body' in errors ? errors.body.message : ''}
+            error={"body" in errors}
+            helperText={"body" in errors ? errors.body.message : ""}
             className={classes.inputField}
             InputProps={{
               startAdornment: (
@@ -237,7 +244,7 @@ const AskQuestionPage = () => {
           className={classes.submitBtn}
           disabled={addQuesLoading || editQuesLoading}
         >
-          {editValues ? 'Update Your Question' : 'Post Your Question'}
+          {editValues ? "Update Your Question" : "Post Your Question"}
         </Button>
         <ErrorMessage
           errorMsg={errorMsg}

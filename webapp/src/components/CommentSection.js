@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import Comment from './Comment';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import Comment from "./Comment";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-import { Divider, Button, TextField } from '@mui/material';
-import { useQuesPageStyles } from '../styles/muiStyles';
+import { Divider, Button, TextField } from "@mui/material";
+import { useQuesPageStyles } from "../styles/muiStyles";
 
 const validationSchema = yup.object({
-  commentBody: yup.string().min(5, 'Must be at least 5 characters'),
+  commentBody: yup.string().min(5, "Must be at least 5 characters"),
 });
 
 const CommentSection = ({
@@ -22,8 +22,14 @@ const CommentSection = ({
   const classes = useQuesPageStyles();
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [inputOpen, setInputOpen] = useState(false);
-  const { register, handleSubmit, reset, errors } = useForm({
-    mode: 'onChange',
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    mode: "onChange",
     resolver: yupResolver(validationSchema),
   });
 
@@ -81,7 +87,7 @@ const CommentSection = ({
           onSubmit={handleSubmit(handleCommentAdd)}
         >
           <TextField
-            inputRef={register}
+            {...register("commentBody")}
             name="commentBody"
             required
             fullWidth
@@ -91,9 +97,9 @@ const CommentSection = ({
             size="small"
             multiline
             rows={3}
-            error={'commentBody' in errors}
+            error={"commentBody" in errors}
             helperText={
-              'commentBody' in errors ? errors.commentBody.message : ''
+              "commentBody" in errors ? errors.commentBody.message : ""
             }
           />
           <div className={classes.submitCancelBtns}>
