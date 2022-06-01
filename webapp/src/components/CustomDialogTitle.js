@@ -1,9 +1,9 @@
-import { Typography, IconButton } from '@mui/material';
-import withStyles from '@mui/styles/withStyles';
-import MuiDialogTitle from '@mui/material/DialogTitle';
-import MuiDialogContent from '@mui/material/DialogContent';
-import MuiDialogActions from '@mui/material/DialogActions';
-import CloseIcon from '@mui/icons-material/Close';
+import { Typography, IconButton } from "@mui/material";
+import withStyles from "@mui/styles/withStyles";
+import MuiDialogTitle from "@mui/material/DialogTitle";
+import MuiDialogContent from "@mui/material/DialogContent";
+import MuiDialogActions from "@mui/material/DialogActions";
+import CloseIcon from "@mui/icons-material/Close";
 
 const styles = (theme) => ({
   root: {
@@ -11,7 +11,7 @@ const styles = (theme) => ({
     paddingBottom: theme.spacing(2),
   },
   closeButton: {
-    position: 'absolute',
+    position: "absolute",
     right: theme.spacing(1),
     top: theme.spacing(1),
     color: theme.palette.primary.main,
@@ -21,14 +21,15 @@ const styles = (theme) => ({
 export const DialogTitle = withStyles(styles)((props) => {
   const { children, classes, onClose, ...other } = props;
   return (
-    <MuiDialogTitle disableTypography className={classes.root} {...other}>
+    <MuiDialogTitle className={classes.root} {...other}>
       <Typography variant="h6">{children}</Typography>
       {onClose ? (
         <IconButton
           aria-label="close"
           className={classes.closeButton}
           onClick={onClose}
-          size="large">
+          size="large"
+        >
           <CloseIcon />
         </IconButton>
       ) : null}

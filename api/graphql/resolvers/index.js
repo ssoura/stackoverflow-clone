@@ -4,7 +4,7 @@ const answerResolvers = require('./answer');
 const quesCommentResolvers = require('./quesComment');
 const ansCommentResolvers = require('./ansComment');
 const tagResolvers = require('./tag');
-const { GraphQLDateTime } = require('graphql-iso-date');
+const { GraphQLDateTime } = require('graphql-scalars');
 
 module.exports = {
   Query: {

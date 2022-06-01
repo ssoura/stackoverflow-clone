@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../graphql/mutations';
-import { useAuthContext } from '../context/auth';
-import { useStateContext } from '../context/state';
-import ErrorMessage from './ErrorMessage';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import SofLogo from '../svg/stack-overflow.svg';
-import { getErrorMsg } from '../utils/helperFuncs';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../graphql/mutations";
+import { useAuthContext } from "../context/auth";
+import { useStateContext } from "../context/state";
+import ErrorMessage from "./ErrorMessage";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import SofLogo from "../svg/stack-overflow.svg";
+import { getErrorMsg } from "../utils/helperFuncs";
 
 import {
   TextField,
@@ -17,17 +17,17 @@ import {
   InputAdornment,
   IconButton,
   Link,
-} from '@mui/material';
-import { useAuthFormStyles } from '../styles/muiStyles';
-import PersonIcon from '@mui/icons-material/Person';
-import LockIcon from '@mui/icons-material/Lock';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+} from "@mui/material";
+import { useAuthFormStyles } from "../styles/muiStyles";
+import PersonIcon from "@mui/icons-material/Person";
+import LockIcon from "@mui/icons-material/Lock";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const validationSchema = yup.object({
-  username: yup.string().required('Required'),
-  password: yup.string().required('Required'),
+  username: yup.string().required("Required"),
+  password: yup.string().required("Required"),
 });
 
 const LoginForm = ({ setAuthType, closeModal }) => {
@@ -36,8 +36,13 @@ const LoginForm = ({ setAuthType, closeModal }) => {
   const classes = useAuthFormStyles();
   const { setUser } = useAuthContext();
   const { notify } = useStateContext();
-  const { register, handleSubmit, reset, errors } = useForm({
-    mode: 'onTouched',
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    mode: "onTouched",
     resolver: yupResolver(validationSchema),
   });
 
@@ -72,8 +77,8 @@ const LoginForm = ({ setAuthType, closeModal }) => {
             label="Username"
             variant="outlined"
             size="small"
-            error={'username' in errors}
-            helperText={'username' in errors ? errors.username.message : ''}
+            error={"username" in errors}
+            helperText={"username" in errors ? errors.username.message : ""}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -89,12 +94,12 @@ const LoginForm = ({ setAuthType, closeModal }) => {
             fullWidth
             inputRef={register}
             name="password"
-            type={showPass ? 'text' : 'password'}
+            type={showPass ? "text" : "password"}
             label="Password"
             variant="outlined"
             size="small"
-            error={'password' in errors}
-            helperText={'password' in errors ? errors.password.message : ''}
+            error={"password" in errors}
+            helperText={"password" in errors ? errors.password.message : ""}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -131,11 +136,12 @@ const LoginForm = ({ setAuthType, closeModal }) => {
         </Button>
       </form>
       <Typography variant="body1" className={classes.footerText}>
-        Don’t have an account?{' '}
+        Don't have an account?{" "}
         <Link
-          onClick={() => setAuthType('signup')}
+          onClick={() => setAuthType("signup")}
           className={classes.link}
-          underline="hover">
+          underline="hover"
+        >
           Sign Up
         </Link>
       </Typography>
