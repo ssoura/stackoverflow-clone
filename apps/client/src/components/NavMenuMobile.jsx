@@ -1,17 +1,13 @@
-import { useState } from 'react';
-import { useLocation, Link as RouterLink } from 'react-router-dom';
+import { useState } from "react";
+import { useLocation, Link as RouterLink } from "react-router-dom";
 
-import {
-  IconButton,
-  Menu,
-  MenuItem,
-} from '@mui/material';
-import { useMenuStyles } from '../styles/muiStyles';
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
-import PublicIcon from '@mui/icons-material/Public';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import PeopleIcon from '@mui/icons-material/People';
+import { IconButton, Menu, MenuItem } from "@mui/material";
+import { useMenuStyles } from "../styles/muiStyles";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
+import PublicIcon from "@mui/icons-material/Public";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import PeopleIcon from "@mui/icons-material/People";
 
 const MobileNavMenu = () => {
   const { pathname } = useLocation();
@@ -34,9 +30,8 @@ const MobileNavMenu = () => {
 
       <Menu
         anchorEl={anchorEl}
-        getContentAnchorEl={null}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        transformOrigin={{ vertical: "top", horizontal: "left" }}
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleCloseMenu}
@@ -45,8 +40,8 @@ const MobileNavMenu = () => {
       >
         <MenuItem
           selected={
-            pathname === '/' ||
-            (!pathname.startsWith('/tag') && !pathname.startsWith('/user'))
+            pathname === "/" ||
+            (!pathname.startsWith("/tag") && !pathname.startsWith("/user"))
           }
           dense
           component={RouterLink}
@@ -57,7 +52,7 @@ const MobileNavMenu = () => {
           Stack Underflow
         </MenuItem>
         <MenuItem
-          selected={pathname.startsWith('/tag')}
+          selected={pathname.startsWith("/tag")}
           dense
           component={RouterLink}
           to="/tags"
@@ -67,7 +62,7 @@ const MobileNavMenu = () => {
           Tags
         </MenuItem>
         <MenuItem
-          selected={pathname.startsWith('/user')}
+          selected={pathname.startsWith("/user")}
           dense
           component={RouterLink}
           to="/users"

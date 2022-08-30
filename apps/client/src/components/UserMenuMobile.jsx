@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import AuthFormModal from './AuthFormModal';
+import { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
+import AuthFormModal from "./AuthFormModal";
 
-import { IconButton, Menu, MenuItem, Avatar } from '@mui/material';
-import { useMenuStyles } from '../styles/muiStyles';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import { IconButton, Menu, MenuItem, Avatar } from "@mui/material";
+import { useMenuStyles } from "../styles/muiStyles";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 
 const MobileUserMenu = ({ user, logoutUser }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -28,7 +28,11 @@ const MobileUserMenu = ({ user, logoutUser }) => {
   return (
     <div>
       {user ? (
-        <IconButton onClick={handleOpenMenu} className={classes.userBtnMob} size="large">
+        <IconButton
+          onClick={handleOpenMenu}
+          className={classes.userBtnMob}
+          size="large"
+        >
           <Avatar
             alt={user.username}
             src={`https://secure.gravatar.com/avatar/${user.id}?s=164&d=identicon`}
@@ -41,21 +45,21 @@ const MobileUserMenu = ({ user, logoutUser }) => {
           onClick={handleOpenMenu}
           color="primary"
           className={classes.moreBtn}
-          size="large">
+          size="large"
+        >
           <MoreVertIcon color="primary" />
         </IconButton>
       )}
       <Menu
         anchorEl={anchorEl}
-        getContentAnchorEl={null}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
+          vertical: "bottom",
+          horizontal: "right",
         }}
         keepMounted
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
+          vertical: "top",
+          horizontal: "right",
         }}
         open={Boolean(anchorEl)}
         onClose={handleCloseMenu}

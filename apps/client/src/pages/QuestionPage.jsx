@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link as RouterLink } from 'react-router-dom';
-import { useLazyQuery } from '@apollo/client';
-import { VIEW_QUESTION } from '../graphql/queries';
-import { useStateContext } from '../context/state';
-import { useAuthContext } from '../context/auth';
-import QuesPageContent from '../components/QuesPageContent';
-import RightSidePanel from '../components/RightSidePanel';
-import AuthFormModal from '../components/AuthFormModal';
-import LoadingSpinner from '../components/LoadingSpinner';
-import { formatDateAgo, getErrorMsg } from '../utils/helperFuncs';
+import { useState, useEffect } from "react";
+import { useParams, Link as RouterLink } from "react-router-dom";
+import { useLazyQuery } from "@apollo/client";
+import { VIEW_QUESTION } from "../graphql/queries";
+import { useStateContext } from "../context/state";
+import { useAuthContext } from "../context/auth";
+import QuesPageContent from "../components/QuesPageContent";
+import RightSidePanel from "../components/RightSidePanel";
+import AuthFormModal from "../components/AuthFormModal";
+import LoadingSpinner from "../components/LoadingSpinner";
+import { formatDateAgo, getErrorMsg } from "../utils/helperFuncs";
 
 import {
   Typography,
@@ -16,9 +16,9 @@ import {
   Divider,
   Grid,
   useMediaQuery,
-} from '@mui/material';
-import { useQuesPageStyles } from '../styles/muiStyles';
-import { useTheme } from '@mui/material/styles';
+} from "@mui/material";
+import { useQuesPageStyles } from "../styles/muiStyles";
+import { useTheme } from "@mui/material/styles";
 
 const QuestionPage = () => {
   const { clearEdit, notify } = useStateContext();
@@ -27,12 +27,15 @@ const QuestionPage = () => {
   const [question, setQuestion] = useState(null);
   const classes = useQuesPageStyles();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [fetchQuestion, { data, loading }] = useLazyQuery(VIEW_QUESTION, {
     onError: (err) => {
-      notify(getErrorMsg(err), 'error');
+      console.log(err);
+      notify(getErrorMsg(err), "error");
     },
   });
+
+  console.log(quesId);
 
   useEffect(() => {
     fetchQuestion({ variables: { quesId } });
@@ -47,7 +50,7 @@ const QuestionPage = () => {
 
   if (loading || !question) {
     return (
-      <div style={{ minWidth: '100%', marginTop: '20%' }}>
+      <div style={{ minWidth: "100%", marginTop: "20%" }}>
         <LoadingSpinner size={80} />
       </div>
     );
@@ -60,9 +63,9 @@ const QuestionPage = () => {
       <div className={classes.topBar}>
         <div className={classes.titleWrapper}>
           <Typography
-            variant={isMobile ? 'h6' : 'h5'}
+            variant={isMobile ? "h6" : "h5"}
             color="secondary"
-            style={{ wordWrap: 'anywhere' }}
+            style={{ wordWrap: "anywhere" }}
           >
             {title}
           </Typography>
@@ -70,11 +73,11 @@ const QuestionPage = () => {
             <Button
               variant="contained"
               color="primary"
-              size={isMobile ? 'small' : 'medium'}
+              size={isMobile ? "small" : "medium"}
               component={RouterLink}
               to="/ask"
               onClick={() => clearEdit()}
-              style={{ minWidth: '9em' }}
+              style={{ minWidth: "9em" }}
             >
               Ask Question
             </Button>
@@ -97,7 +100,12 @@ const QuestionPage = () => {
         </div>
       </div>
       <Divider />
-      <Grid container direction="row" wrap="nowrap" justifyContent="space-between">
+      <Grid
+        container
+        direction="row"
+        wrap="nowrap"
+        justifyContent="space-between"
+      >
         <QuesPageContent question={question} />
         <RightSidePanel />
       </Grid>

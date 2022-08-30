@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import AuthFormModal from './AuthFormModal';
+import { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
+import AuthFormModal from "./AuthFormModal";
 
-import { Button, Menu, MenuItem, Avatar, Typography } from '@mui/material';
-import { useMenuStyles } from '../styles/muiStyles';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { Button, Menu, MenuItem, Avatar, Typography } from "@mui/material";
+import { useMenuStyles } from "../styles/muiStyles";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const UserMenuDesktop = ({ user, logoutUser }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -28,7 +28,7 @@ const UserMenuDesktop = ({ user, logoutUser }) => {
   return (
     <div>
       {user ? (
-        <div style={{ display: 'inline' }}>
+        <div style={{ display: "inline" }}>
           <Button
             className={classes.userBtn}
             onClick={handleOpenMenu}
@@ -45,15 +45,14 @@ const UserMenuDesktop = ({ user, logoutUser }) => {
           </Button>
           <Menu
             anchorEl={anchorEl}
-            getContentAnchorEl={null}
             anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right',
+              vertical: "bottom",
+              horizontal: "right",
             }}
             keepMounted
             transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
+              vertical: "top",
+              horizontal: "right",
             }}
             open={Boolean(anchorEl)}
             onClose={handleCloseMenu}
